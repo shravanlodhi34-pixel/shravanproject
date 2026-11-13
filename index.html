@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT-RAG | YouTube Video Knowledge Assistant</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0e1117;
+      color: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: #161b22;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    .badge {
+      background: rgba(99, 102, 241, 0.2);
+      color: #818cf8;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+    .btn-primary {
+      background: #6366f1;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #4f46e5;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .iframe-container {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0e1117;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    .status-toast {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(22, 27, 34, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <span>🎓 YT-RAG</span>
+      <span class="badge">45 Days Training Project</span>
+    </div>
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="reloadFrame()">🔄 Reload</button>
+      <a href="https://github.com/shravanlodhi34-pixel/shravanproject" target="_blank" class="btn btn-secondary">
+        🐙 GitHub Repo
+      </a>
+      <a href="http://localhost:8501" target="_blank" class="btn btn-primary">
+        🚀 Open Full Screen (localhost:8501)
+      </a>
+    </div>
+  </header>
+
+  <div class="iframe-container">
+    <iframe id="app-frame" src="http://localhost:8501" title="YT-RAG Application" allow="microphone; camera; clipboard-write;"></iframe>
+  </div>
+
+  <div class="status-toast" id="toast">
+    <div class="pulse-dot"></div>
+    <span>Server URL: <strong>http://localhost:8501</strong></span>
+  </div>
+
+  <script>
+    function reloadFrame() {
+      const frame = document.getElementById('app-frame');
+      frame.src = frame.src;
+    }
+
+    // Auto-open localhost if requested via ?open=direct
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('open') === 'direct') {
+      window.location.href = 'http://localhost:8501';
+    }
+  </script>
+
+</body>
+</html>
